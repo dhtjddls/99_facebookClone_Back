@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class images extends Model {
     /**
@@ -11,15 +9,48 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.posts, {
+        targetKey: "post_id",
+        foreignKey: "post_id",
+      });
     }
   }
-  images.init({
-    title: DataTypes.STRING,
-    content: DataTypes.STRING,
-    password: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'images',
-  });
+  images.init(
+    {
+      image_id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+      post_id: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        reference: {
+          model: "posts",
+          key: "post_id",
+        },
+        onDelete: "CASCADE",
+      },
+      img_url: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.fn("now"),
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.fn("now"),
+      },
+    },
+    {
+      sequelize,
+      modelName: "images",
+    }
+  );
   return images;
 };

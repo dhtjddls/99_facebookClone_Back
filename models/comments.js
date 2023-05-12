@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class comments extends Model {
     /**
@@ -11,15 +9,61 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.users, {
+        targetKey: "user_id",
+        foreignKey: "user_id",
+      });
+      this.belongsTo(models.posts, {
+        targetKey: "post_id",
+        foreignKey: "post_id",
+      });
     }
   }
-  comments.init({
-    title: DataTypes.STRING,
-    content: DataTypes.STRING,
-    password: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'comments',
-  });
+  comments.init(
+    {
+      comment_id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+      user_id: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        reference: {
+          model: "users",
+          key: "user_id",
+        },
+        onDelete: "CASCADE",
+      },
+      post_id: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        reference: {
+          model: "posts",
+          key: "post_id",
+        },
+        onDelete: "CASCADE",
+      },
+      comment: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.fn("now"),
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.fn("now"),
+      },
+    },
+    {
+      sequelize,
+      modelName: "comments",
+    }
+  );
   return comments;
 };
