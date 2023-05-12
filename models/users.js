@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class users extends Model {
     /**
@@ -11,15 +9,71 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.hasMany(models.posts, {
+        sourceKey: "user_id",
+        foreignKey: "user_id",
+      });
+      is.hasMany(models.follows, {
+        sourceKey: "user_id",
+        foreignKey: "user_id",
+      });
+      this.hasMany(models.comments, {
+        sourceKey: "user_id",
+        foreignKey: "user_id",
+      });
+      this.hasMany(models.likes, {
+        sourceKey: "user_id",
+        foreignKey: "user_id",
+      });
     }
   }
-  users.init({
-    title: DataTypes.STRING,
-    content: DataTypes.STRING,
-    password: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'users',
-  });
+  users.init(
+    {
+      user_id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+      name: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      email: {
+        allowNull: false,
+        unique: true,
+        type: DataTypes.STRING,
+      },
+      password: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      birthday: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      gender: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      profile_url: {
+        type: DataTypes.STRING,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.fn("now"),
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.fn("now"),
+      },
+    },
+    {
+      sequelize,
+      modelName: "users",
+    }
+  );
   return users;
 };
