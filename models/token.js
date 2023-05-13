@@ -1,5 +1,4 @@
 "use strict";
-const Sequelize = require("sequelize");
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Token extends Model {
@@ -18,10 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
       },
       refresh_token: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
       },
     },
     {

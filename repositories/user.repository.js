@@ -2,11 +2,11 @@ const { Op } = require("sequelize");
 
 class UsersRepository {
   constructor(usersModel) {
-    this.users = usersModel;
+    this.Users = usersModel;
   }
 
   searchUser = async (name) => {
-    const searchUserData = this.users.findAll({
+    const searchUserData = this.Users.findAll({
       where: {
         name: {
           [Op.like]: `%${name}%`,
@@ -17,4 +17,4 @@ class UsersRepository {
   };
 }
 
-module.exports = new UsersRepository();
+module.exports = UsersRepository;

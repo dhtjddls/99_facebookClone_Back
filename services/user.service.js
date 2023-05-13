@@ -1,12 +1,13 @@
 const UsersRepository = require("../repositories/user.repository");
-const { users } = require("../models/index");
+const { Users } = require("../models/index");
 
 class UsersService {
-  usersRepository = new UsersRepository(users);
+  usersRepository = new UsersRepository(Users);
 
   searchUser = async (name) => {
     const searchUserData = await this.usersRepository.searchUser(name);
-    console.log(searchUserData);
+    const userInfos = { userInfos: searchUserData };
+    return userInfos;
   };
 }
 
