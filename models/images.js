@@ -27,14 +27,6 @@ module.exports = (sequelize, DataTypes) => {
       post_id: {
         allowNull: false,
         type: DataTypes.INTEGER,
-<<<<<<< HEAD
-=======
-        references: {
-          model: "posts",
-          key: "post_id",
-        },
-        onDelete: "CASCADE",
->>>>>>> b87f588923c6388727d5764de2975e6083562b8d
       },
       img_url: {
         allowNull: false,
