@@ -41,6 +41,7 @@ class UserService {
     const refreshToken = jwt.sign({ user_id: user.user_id }, 'secret', {
       expiresIn: '7d',
     });
+
     await this.tokenRepository.setRefreshToken(refreshToken, userId);
 
     return { accessObject, refreshToken: refreshToken };

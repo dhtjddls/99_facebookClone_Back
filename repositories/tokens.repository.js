@@ -1,15 +1,15 @@
 const jwt = require('jsonwebtoken');
-const { Token } = require('../models');
+const { Tokens } = require('../models');
 
 class TokenRepository {
   setRefreshToken = async (refreshToken, userId) => {
-    const existRefreshToken = await Token.findOne({
+    const existRefreshToken = await Tokens.findOne({
       where: { user_id: userId },
       attributes: ['user_id'],
     });
 
     if (!existRefreshToken) {
-      const rToken = await Token.create({
+      const rToken = await Tokens.create({
         user_id: userId,
         token: refreshToken,
       });
@@ -19,7 +19,7 @@ class TokenRepository {
   };
 
   getRefreshToken = async (userId) => {
-    const token = await Token.findOne({
+    const token = await Tokens.findOne({
       where: { user_id: userId },
       attributes: ['user_id'],
     });
