@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class posts extends Model {
+  class Posts extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,28 +9,29 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.users, {
+      this.belongsTo(models.Users, {
         targetKey: "user_id",
         foreignKey: "user_id",
+        onDelete: "CASCADE",
       });
 
-      this.hasMany(models.likes, {
+      this.hasMany(models.Likes, {
         sourceKey: "post_id",
         foreignKey: "post_id",
       });
 
-      is.hasMany(models.comments, {
+      this.hasMany(models.Comments, {
         sourceKey: "post_id",
         foreignKey: "post_id",
       });
 
-      this.hasMany(models.images, {
+      this.hasMany(models.Images, {
         sourceKey: "post_id",
         foreignKey: "post_id",
       });
     }
   }
-  posts.init(
+  Posts.init(
     {
       post_id: {
         allowNull: false,
@@ -40,12 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       user_id: {
         allowNull: false,
-        pe: DataTypes.INTEGER,
-        reference: {
-          model: "users",
-          key: "user_id",
-        },
-        onDelete: "CASCADE",
+        type: DataTypes.INTEGER,
       },
       content: {
         allowNull: false,
@@ -58,18 +54,18 @@ module.exports = (sequelize, DataTypes) => {
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
-        defaultValue: DataTypes.fn("now"),
+        defaultValue: DataTypes.NOW,
       },
       updatedAt: {
         allowNull: false,
         type: DataTypes.DATE,
-        defaultValue: DataTypes.fn("now"),
+        defaultValue: DataTypes.NOW,
       },
     },
     {
       sequelize,
-      modelName: "posts",
+      modelName: "Posts",
     }
   );
-  return posts;
+  return Posts;
 };

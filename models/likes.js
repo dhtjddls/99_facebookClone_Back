@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class likes extends Model {
+  class Likes extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,17 +9,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.posts, {
+      this.belongsTo(models.Posts, {
         targetKey: "post_id",
         foreignKey: "post_id",
+        onDelete: "CASCADE",
       });
-      this.belongsTo(models.users, {
+      this.belongsTo(models.Users, {
         targetKey: "user_id",
         foreignKey: "user_id",
+        onDelete: "CASCADE",
       });
     }
   }
-  likes.init(
+  Likes.init(
     {
       like_id: {
         allowNull: false,
@@ -29,37 +31,27 @@ module.exports = (sequelize, DataTypes) => {
       },
       user_id: {
         allowNull: false,
-        pe: DataTypes.INTEGER,
-        reference: {
-          model: "users",
-          key: "user_id",
-        },
-        onDelete: "CASCADE",
+        type: DataTypes.INTEGER,
       },
       post_id: {
         allowNull: false,
         type: DataTypes.INTEGER,
-        reference: {
-          model: "posts",
-          key: "post_id",
-        },
-        onDelete: "CASCADE",
       },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
-        defaultValue: DataTypes.fn("now"),
+        defaultValue: DataTypes.NOW,
       },
       updatedAt: {
         allowNull: false,
         type: DataTypes.DATE,
-        defaultValue: DataTypes.fn("now"),
+        defaultValue: DataTypes.NOW,
       },
     },
     {
       sequelize,
-      modelName: "likes",
+      modelName: "Likes",
     }
   );
-  return likes;
+  return Likes;
 };
