@@ -29,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       user_id: {
         allowNull: false,
-        pe: DataTypes.INTEGER,
-        reference: {
+        type: DataTypes.INTEGER,
+        references: {
           model: "users",
           key: "user_id",
         },
@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       post_id: {
         allowNull: false,
         type: DataTypes.INTEGER,
-        reference: {
+        references: {
           model: "posts",
           key: "post_id",
         },
@@ -48,12 +48,12 @@ module.exports = (sequelize, DataTypes) => {
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
-        defaultValue: DataTypes.fn("now"),
+        defaultValue: DataTypes.NOW,
       },
       updatedAt: {
         allowNull: false,
         type: DataTypes.DATE,
-        defaultValue: DataTypes.fn("now"),
+        defaultValue: DataTypes.NOW,
       },
     },
     {
