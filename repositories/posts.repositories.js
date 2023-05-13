@@ -13,14 +13,24 @@ class PostRepository {
   };
 
   createImage = async (img_url, createdAt, updatedAt) => {
-    const createImageData = await images.create({
-      img_url,
-      createdAt,
-      updatedAt
-    });
-
-    return createImageData;
-  };
+    if (Array.isArray(img_url)) {
+      img_url.forEach(async (url) => {
+        const createImageData = await images.create({
+          img_url: url,
+          createdAt,
+          updatedAt,
+        });
+        return createImageData;
+      });
+    } else {
+      const createImageData = await images.create({
+        img_url,
+        createdAt,
+        updatedAt,
+      });
+      return createImageData;
+    }
+  }
 }
 
 module.exports = PostRepository;

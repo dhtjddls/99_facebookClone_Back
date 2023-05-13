@@ -23,7 +23,7 @@ class PostsController {
       );
 
       // 이미지 파일을 업로드 할 경우
-      if (img_url) {
+      if (img_url !== undefined) {
         const createPostImageData = await this.postService.createPostImage(
           user_id,
           content,
