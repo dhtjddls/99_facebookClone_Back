@@ -25,7 +25,6 @@ class FollowerController {
             return res.status(400).json({ "errorMessage": "팔로워 추가에 실패하였습니다." })
         }
 
-
     }
 
     deleteFollwer = async (req, res, next) => {
@@ -35,7 +34,7 @@ class FollowerController {
             return deleteFollowData;
         } catch (error) {
             console.error(error)
-            return res.status(400).json({ "errorMessage": "팔로워 추가에 실패하였습니다." })
+            return res.status(400).json({ "errorMessage": "팔로워 취소에 실패하였습니다." })
         }
 
 
