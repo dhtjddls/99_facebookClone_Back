@@ -26,25 +26,25 @@ module.exports = (sequelize, DataTypes) => {
       user_id: {
         allowNull: false,
         type: DataTypes.INTEGER,
-        reference: {
+        references: {
           model: "users",
           key: "user_id",
         },
         onDelete: "CASCADE",
       },
-      follwer_name: {
+      follower_name: {
         allowNull: false,
         type: DataTypes.STRING,
       },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
-        defaultValue: DataTypes.fn("now"),
+        defaultValue: DataTypes.NOW,
       },
       updatedAt: {
         allowNull: false,
         type: DataTypes.DATE,
-        defaultValue: DataTypes.fn("now"),
+        defaultValue: DataTypes.NOW,
       },
     },
     {

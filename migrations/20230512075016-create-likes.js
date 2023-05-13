@@ -1,18 +1,18 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('likes', {
+    await queryInterface.createTable("likes", {
       like_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       user_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        reference: {
+        references: {
           model: "users",
           key: "user_id",
         },
@@ -21,7 +21,7 @@ module.exports = {
       post_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        reference: {
+        references: {
           model: "posts",
           key: "post_id",
         },
@@ -36,10 +36,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn("now"),
-      }
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('likes');
-  }
+    await queryInterface.dropTable("likes");
+  },
 };
