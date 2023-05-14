@@ -31,7 +31,7 @@
 
 <div align="center">
   
-## F.E
+### F.E
   
 </div>
 
@@ -43,7 +43,7 @@
 
 <div align="center">
   
-## B.E
+### B.E
   
 </div>
 
@@ -54,6 +54,8 @@
 <img src="https://img.shields.io/badge/amazonec2-FF9900?style=for-the-badge&logo=mysql&logoColor=white">
 </div>
 
+</br>
+</br>
 
 # 🖼와이어프레임
 
@@ -65,7 +67,8 @@
 ![채팅](https://github.com/99-facebookClone/99_facebookClone_Back/assets/96641210/90fac201-aa5e-4007-b278-0252aeaadf44)
 ![게시판- 글조회(추천게시물)](https://github.com/99-facebookClone/99_facebookClone_Back/assets/96641210/5acb48b9-55e5-41fd-86ec-a7a303d47d39)
 
-
+</br>
+</br>
 
 # ERD
 
