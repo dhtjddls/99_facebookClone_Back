@@ -4,9 +4,10 @@ class FollowerController {
     followerService = new FollowerService()
 
     getFollowerAll = async (req, res, next) => {
-        const { user_id } = res.locals.user
+        const { user_id } = req.body
         try {
-            const getFollowData = this.followerService.getFollowerAll(user_id)
+            const getFollowData = await this.followerService.getFollowerAll(user_id)
+            console.log(getFollowData)
             return res.status(200).json({ follow: getFollowData })
         } catch (error) {
             console.error(error)
@@ -15,32 +16,30 @@ class FollowerController {
     }
 
     postFollower = async (req, res, next) => {
-        const { user_id } = res.locals.user
+        const { user_id } = req.body
+
         try {
             const postFollowData = await this.followerService.postFollower(user_id);
-
-            return postFollowData
-        } catch (error) {
+            return res.status(200).json(postFollowData)
+        }
+        catch (error) {
             console.error(error)
             return res.status(400).json({ "errorMessage": "팔로워 추가에 실패하였습니다." })
         }
 
     }
 
-    deleteFollwer = async (req, res, next) => {
-        const { follow_id } = res.locals.user
+    deleteFollower = async (req, res, next) => {
+        const { user_id } = req.body
         try {
-            const deleteFollowData = await this.followerService.deleteFollwer(follow_id, user_id);
-            return deleteFollowData;
+            const deleteFollowData = await this.followerService.deleteFollower(user_id);
+            return res.status(200).json(deleteFollowData);
         } catch (error) {
             console.error(error)
             return res.status(400).json({ "errorMessage": "팔로워 취소에 실패하였습니다." })
         }
 
-
-
     }
-
 
 }
 

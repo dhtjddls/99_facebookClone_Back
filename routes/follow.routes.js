@@ -3,8 +3,8 @@ const router = express.Router();
 const FollowerController = require("../controllers/follower.controller");
 const followerController = new FollowerController()
 
-router.get("/follow", followerController.getFollowerAll);
-router.post("/follow", followerController.postFollower);
-router.delete("/follow", followerController.deleteFollwer);
+router.get("/", followerController.getFollowerAll);
+router.post("/", followerController.postFollower);
+router.delete("/", followerController.deleteFollower);
 
 module.exports = router;
