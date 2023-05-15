@@ -1,13 +1,11 @@
-const PostRepository = require("../repositories/posts.repositories")
-const { sequelize } = require("../models");
-const { Transaction } = require("sequelize");
+const PostRepository = require('../repositories/posts.repositories');
+const { sequelize } = require('../models');
+const { Transaction } = require('sequelize');
 
 class PostService {
   postRepository = new PostRepository();
 
-  createPost = async (
-    userId, content, createdAt, updatedAt
-  ) => {
+  createPost = async (userId, content, createdAt, updatedAt) => {
     const createPostData = await this.postRepository.createPost(
       userId,
       content,
@@ -16,20 +14,14 @@ class PostService {
     );
 
     return {
-      postId: createPostData.postId,
+      postId: createPostData.post_id,
       content: createPostData.content,
       createdAt: createPostData.createdAt,
       updatedAt: createPostData.updatedAt,
     };
   };
 
-  createPostImage = async (
-    userId, 
-    img_url, 
-    content, 
-    createdAt, 
-    updatedAt
-  ) => {
+  createPostImage = async (userId, img_url, content, createdAt, updatedAt) => {
     const result = await sequelize.transaction(
       { isolateLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED },
       async (t) => {
@@ -60,6 +52,6 @@ class PostService {
 
     return result;
   };
-};
+}
 
 module.exports = PostService;

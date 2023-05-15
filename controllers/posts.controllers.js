@@ -1,4 +1,4 @@
-const PostService = require("../services/posts.service");
+const PostService = require('../services/posts.service');
 
 class PostsController {
   postService = new PostService();
@@ -9,11 +9,14 @@ class PostsController {
       const { user_id } = res.locals.user;
       const { content, createdAt, updatedAt } = req.body;
       const { img_url } = req;
-      console.log(img_url);
-      
+      // console.log(img_url);
+      console.log(user_id);
+
       if (!content) {
-        return res.status(412).json({ errorMessage: "게시글 내용을 입력해주세요." });
-      };
+        return res
+          .status(412)
+          .json({ errorMessage: '게시글 내용을 입력해주세요.' });
+      }
 
       const createPostData = await this.postService.createPost(
         user_id,
@@ -35,11 +38,13 @@ class PostsController {
       }
 
       console.log(createPostData);
-      return res.status(200).json({ message: "게시물 작성에 성공했습니다." });
+      return res.status(200).json({ message: '게시물 작성에 성공했습니다.' });
     } catch (err) {
       console.error(err);
-      return res.status(400).json({ errorMessage: "요청한 데이터 형식이 올바르지 않습니다." });
-    };
+      return res
+        .status(400)
+        .json({ errorMessage: '요청한 데이터 형식이 올바르지 않습니다.' });
+    }
   };
 }
 
