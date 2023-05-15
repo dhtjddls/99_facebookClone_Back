@@ -1,6 +1,6 @@
-const PostRepository = require("../repositories/posts.repository");
-const { sequelize } = require("../models");
-const { Transaction } = require("sequelize");
+const PostRepository = require('../repositories/posts.repository');
+const { sequelize } = require('../models');
+const { Transaction } = require('sequelize');
 
 class PostService {
   postRepository = new PostRepository();
