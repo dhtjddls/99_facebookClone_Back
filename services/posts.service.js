@@ -6,17 +6,17 @@ class PostService {
   postRepository = new PostRepository();
 
   createPost = async (
-    userId, content, createdAt, updatedAt
+    user_id, content, createdAt, updatedAt
   ) => {
     const createPostData = await this.postRepository.createPost(
-      userId,
+      user_id,
       content,
       createdAt,
       updatedAt
     );
 
     return {
-      postId: createPostData.postId,
+      post_id: createPostData.post_id,
       content: createPostData.content,
       createdAt: createPostData.createdAt,
       updatedAt: createPostData.updatedAt,
@@ -24,9 +24,9 @@ class PostService {
   };
 
   createPostImage = async (
-    userId, 
-    img_url, 
+    user_id,
     content, 
+    img_url, 
     createdAt, 
     updatedAt
   ) => {
@@ -34,14 +34,16 @@ class PostService {
       { isolateLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED },
       async (t) => {
         const createPostData = await this.postRepository.createPost(
-          userId,
+          user_id,
           content,
           createdAt,
           updatedAt,
           { transaction: t }
         );
 
+      // const createImageDataPromises = img_urls.map(async (img_url) => {});
         const createImageData = await this.postRepository.createImage(
+          createPostData.post_id,
           img_url,
           createdAt,
           updatedAt,
@@ -49,9 +51,9 @@ class PostService {
         );
 
         return {
-          postId: createPostData.postId,
-          img_url: createImageData.content,
+          post_id: createPostData.post_id,
           content: createPostData.content,
+          img_url: createImageData.img_url,
           createdAt: createPostData.createdAt,
           updatedAt: createPostData.updatedAt,
         };

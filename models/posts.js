@@ -50,6 +50,7 @@ module.exports = (sequelize, DataTypes) => {
       likes: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,
