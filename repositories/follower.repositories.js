@@ -1,7 +1,6 @@
 
 class FollowerRepository {
-    constructor(Users, Follows) {
-        this.Users = Users;
+    constructor(Follows) {
         this.Follows = Follows;
     }
 
@@ -18,11 +17,7 @@ class FollowerRepository {
         return getFollowData
     }
 
-    postFollower = async (user_id) => {
-        const getUser = await this.Users.findOne({
-            where: { user_id },
-            attributes: ["user_id", "name", "profile_url"]
-        });
+    postFollower = async (user_id, getUser) => {
 
         const postFollowData = await this.Follows.create({
             user_id,
@@ -39,6 +34,10 @@ class FollowerRepository {
         })
         return deleteFollowData
     }
+
+
+
+
 
 }
 module.exports = FollowerRepository
