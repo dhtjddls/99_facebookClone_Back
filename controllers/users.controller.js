@@ -5,7 +5,7 @@ class UserController {
 
   signup = async (req, res) => {
     const { email, name, password, birthday, gender } = req.body;
-    const img_url = req.img_url;
+    const img_url = req.img_url[0];
     console.log(req.img_url);
 
     try {
