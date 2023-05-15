@@ -1,8 +1,11 @@
+const { Users, Follows } = require("../models");
 const FollowerRepository = require("../repositories/follower.repositories")
+
 
 class FollowerService {
 
-    followerRepository = new FollowerRepository()
+    followerRepository = new FollowerRepository(Users, Follows);
+
 
     getFollowerAll = async (user_id) => {
         const getFollowData = await this.followerRepository.getFollowerAll(user_id);
@@ -11,6 +14,7 @@ class FollowerService {
             return {
                 follow_id: e.follow_id,
                 user_id: e.user_id,
+                follower_name: e.follower_name,
                 profile_url: e.profile_url,
                 createdAt: e.createdAt,
                 updatedAt: e.updatedAt

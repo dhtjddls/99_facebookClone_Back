@@ -1,12 +1,13 @@
-const { Follows } = require("../models");
-const { Users } = require("../models")
-
 
 class FollowerRepository {
+    constructor(Users, Follows) {
+        this.Users = Users;
+        this.Follows = Follows;
+    }
 
     getFollowerAll = async (user_id) => {
-        console.log(user_id)
-        const getFollowData = await Follows.findAll(
+
+        const getFollowData = await this.Follows.findAll(
             {
                 where: { user_id },
                 attributes: ["follow_id", "user_id", "follower_name", "createdAt", "updatedAt"],
@@ -18,12 +19,12 @@ class FollowerRepository {
     }
 
     postFollower = async (user_id) => {
-        const getUser = await Users.findOne({
+        const getUser = await this.Users.findOne({
             where: { user_id },
             attributes: ["user_id", "name", "profile_url"]
         });
 
-        const postFollowData = await Follows.create({
+        const postFollowData = await this.Follows.create({
             user_id,
             profile_url: getUser.profile_url,
             follower_name: getUser.name
@@ -33,7 +34,7 @@ class FollowerRepository {
 
     deleteFollower = async (user_id) => {
 
-        const deleteFollowData = await Follows.destroy({
+        const deleteFollowData = await this.Follows.destroy({
             where: { user_id }
         })
         return deleteFollowData

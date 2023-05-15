@@ -4,10 +4,10 @@ class FollowerController {
     followerService = new FollowerService()
 
     getFollowerAll = async (req, res, next) => {
-        const { user_id } = req.body
+        const { user_id } = req.body//1
         try {
             const getFollowData = await this.followerService.getFollowerAll(user_id)
-            console.log(getFollowData)
+
             return res.status(200).json({ follow: getFollowData })
         } catch (error) {
             console.error(error)
