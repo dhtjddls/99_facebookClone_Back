@@ -1,4 +1,4 @@
-const FollowerService = require("../services/follower.services")
+const FollowerService = require("../services/follower.service")
 
 class FollowerController {
     followerService = new FollowerService()

@@ -1,8 +1,6 @@
 const { Users, Follows } = require("../models");
-
-const FollowerRepository = require("../repositories/follower.repositories")
+const FollowerRepository = require("../repositories/follower.repository")
 const UserRepository = require("../repositories/users.repository")
-
 
 class FollowerService {
 
@@ -11,7 +9,6 @@ class FollowerService {
 
 
     getFollowerAll = async (user_id) => {
-
         const getFollowData = await this.followerRepository.getFollowerAll(user_id);
 
         return getFollowData.map(e => {
@@ -27,17 +24,11 @@ class FollowerService {
     }
 
     postFollower = async (user_id) => {
-
         const getUser = await this.userRepository.postFollower(user_id);
 
         const postFollowData = await this.followerRepository.postFollower(user_id, getUser);
-        console.log(getUser)
-        console.log(postFollowData)
-
-
         return ({ "message": "팔로워 추가 완료" })
     }
-
     deleteFollower = async (user_id) => {
         const deleteFollowData = await this.followerRepository.deleteFollower(user_id);
 
