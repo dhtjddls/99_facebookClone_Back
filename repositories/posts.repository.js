@@ -1,4 +1,4 @@
-const { Posts, Images } = require("../models");
+const { Posts, Images, Users, Sequelize } = require("../models");
 
 class PostRepository {
   // Posts Table에 content 저장
@@ -41,9 +41,17 @@ class PostRepository {
 
   findAllPost = async () => {
     const findAllPostsData = await Posts.findAll({
+      include:[
+        {
+          model: Users,
+          attributes:[],
+          require: true,
+        },
+      ],
       attributes: [
         "post_id",
         "user_id",
+        [Sequelize.literal("`User`.`name`"), "name"],
         "content",
         "likes",
         "createdAt",
