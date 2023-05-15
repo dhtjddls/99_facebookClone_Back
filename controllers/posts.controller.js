@@ -8,8 +8,8 @@ class PostsController {
     try {
       const { user_id } = res.locals.user;
       const { content, createdAt, updatedAt } = req.body;
-      const { img_url } = req;
-      console.log(img_url);
+      const img_urls = req.img_url;
+      console.log(img_urls);
 
       if (!content) {
         return res
@@ -17,27 +17,30 @@ class PostsController {
           .json({ errorMessage: '게시글 내용을 입력해주세요.' });
       }
 
-      const createPostData = await this.postService.createPost(
-        user_id,
-        content,
-        createdAt,
-        updatedAt
-      );
+      // content만 입력할 경우
+      if (img_urls === undefined) {
+        const createPostData = await this.postService.createPost(
+          user_id,
+          content,
+          createdAt,
+          updatedAt
+        );
+        console.log(createPostData);
+      };
 
-      // 이미지 파일을 업로드 할 경우
-      if (img_url !== undefined) {
+      // 이미지 파일을 함께 업로드 할 경우
+      if (img_urls !== undefined) {
         const createPostImageData = await this.postService.createPostImage(
           user_id,
           content,
-          img_url,
+          img_urls,
           createdAt,
           updatedAt
         );
         console.log(createPostImageData);
       }
 
-      console.log(createPostData);
-      return res.status(200).json({ message: '게시물 작성에 성공했습니다.' });
+      return res.status(200).json({ message: "게시물 작성에 성공했습니다." });
     } catch (err) {
       console.error(err);
       return res
