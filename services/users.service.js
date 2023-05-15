@@ -3,7 +3,6 @@ const { Users } = require("../models");
 const { Tokens } = require("../models");
 const jwt = require("jsonwebtoken");
 const TokenRepository = require("../repositories/tokens.repository");
-console.log(Users);
 class UserService {
   userRepository = new UserRepository(Users);
   tokenRepository = new TokenRepository(Tokens);

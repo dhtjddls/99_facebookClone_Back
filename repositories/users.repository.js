@@ -1,5 +1,4 @@
 const { Op } = require("sequelize");
-
 class UserRepository {
   constructor(usersModel) {
     this.Users = usersModel;
