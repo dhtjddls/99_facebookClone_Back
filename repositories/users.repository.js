@@ -1,8 +1,11 @@
-const { Users } = require('../models');
+const { Op } = require("sequelize");
 
 class UserRepository {
+  constructor(usersModel) {
+    this.Users = usersModel;
+  }
   createUser = async (email, name, password, birthday, gender, file) => {
-    const createUserData = await Users.create(
+    const createUserData = await this.Users.create(
       email,
       name,
       password,
@@ -14,17 +17,29 @@ class UserRepository {
   };
 
   findOneUser = async (email) => {
-    const findOneUserData = await Users.findOne({
+    const findOneUserData = await this.Users.findOne({
       where: { email: email },
     });
     return findOneUserData;
   };
 
   findOneByUserId = async (user_id) => {
-    const userInfo = await Users.findOne({
+    const userInfo = await this.Users.findOne({
       where: { user_id },
     });
     return userInfo;
+  };
+
+  searchUser = async (name) => {
+    const searchUserData = await this.Users.findAll({
+      where: {
+        name: {
+          [Op.like]: `%${name}%`,
+        },
+      },
+      attributes: ["user_id", "name", "email", "profile_url"],
+    });
+    return searchUserData;
   };
 }
 
