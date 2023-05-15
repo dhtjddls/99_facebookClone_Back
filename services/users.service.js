@@ -1,20 +1,29 @@
+<<<<<<< HEAD
 const UserRepository = require("../repositories/users.repository");
 const { Users } = require("../models");
 const { Tokens } = require("../models");
 const jwt = require("jsonwebtoken");
 const TokenRepository = require("../repositories/tokens.repository");
+=======
+const UserRepository = require('../repositories/users.repository');
+const { Users } = require('../models');
+const { Tokens } = require('../models');
+const jwt = require('jsonwebtoken');
+const TokenRepository = require('../repositories/tokens.repository');
+console.log(Users);
+>>>>>>> fde26467e373d94eb4599e808343db2952ac1a93
 class UserService {
   userRepository = new UserRepository(Users);
   tokenRepository = new TokenRepository(Tokens);
 
-  signup = async (email, name, password, birthday, gender, file) => {
+  signup = async (email, name, password, birthday, gender, profile_url) => {
     const user = await this.userRepository.createUser(
       email,
       name,
       password,
       birthday,
       gender,
-      file
+      profile_url
     );
 
     let userInfo = {
@@ -24,7 +33,7 @@ class UserService {
       password: user.password,
       birthday: user.birthday,
       gender: user.gender,
-      file: user.file,
+      profile_url: user.profile_url,
     };
     return userInfo;
   };
@@ -32,18 +41,19 @@ class UserService {
   login = async (email) => {
     const user = await this.userRepository.findOneUser(email);
     const userId = user.user_id;
-    const accessToken = jwt.sign({ user_id: user.user_id }, "secret", {
-      expiresIn: "120s",
+    const accessToken = jwt.sign({ user_id: user.user_id }, 'secret', {
+      expiresIn: '10s',
     });
-    const accessObject = { type: "Bearer", token: accessToken };
+    const accessObject = { type: 'Bearer', token: accessToken };
 
-    const refreshToken = jwt.sign({ user_id: user.user_id }, "secret", {
-      expiresIn: "7d",
+    const refreshToken = jwt.sign({ user_id: user.user_id }, 'secret', {
+      expiresIn: '7d',
     });
 
+    //생성한 refresh토큰을 repo에 저장하는 과정
     await this.tokenRepository.setRefreshToken(refreshToken, userId);
 
-    return { accessObject, refreshToken: refreshToken };
+    return { accessObject, refreshToken };
   };
 
   findOneUser = async (email) => {

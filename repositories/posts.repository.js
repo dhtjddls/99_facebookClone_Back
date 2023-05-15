@@ -1,6 +1,7 @@
-const { Posts, Images } = require("../models");
+const { Posts, Images, Users, Sequelize } = require("../models");
 
 class PostRepository {
+  // Posts Table에 content 저장
   createPost = async (user_id, content, createdAt, updatedAt) => {
     const createPostData = await Posts.create({
       user_id,
@@ -12,25 +13,17 @@ class PostRepository {
     return createPostData;
   };
 
-  createImage = async (img_url, createdAt, updatedAt) => {
-    if (Array.isArray(img_url)) {
-      img_url.forEach(async (url) => {
-        const createImageData = await Images.create({
-          img_url: url,
-          createdAt,
-          updatedAt,
-        });
-        return createImageData;
-      });
-    } else {
+  // Images Table에 img_url 저장
+  createImage = async (post_id, img_url, createdAt, updatedAt) => {
       const createImageData = await Images.create({
+        post_id,
         img_url,
         createdAt,
         updatedAt,
       });
       return createImageData;
-    }
-  };
+    };
+
   findOnePost = async (post_id) => {
     const findOnePostData = await Posts.findOne({
       where: { post_id },
@@ -48,9 +41,17 @@ class PostRepository {
 
   findAllPost = async () => {
     const findAllPostsData = await Posts.findAll({
+      include:[
+        {
+          model: Users,
+          attributes:[],
+          require: true,
+        },
+      ],
       attributes: [
         "post_id",
         "user_id",
+        [Sequelize.literal("`User`.`name`"), "name"],
         "content",
         "likes",
         "createdAt",
