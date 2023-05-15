@@ -1,4 +1,5 @@
 const aws = require("aws-sdk");
+const { request } = require("http");
 const multer = require("multer");
 const multerS3 = require("multer-s3-transform");
 const path = require("path");
@@ -9,6 +10,7 @@ const s3 = new aws.S3({
   accessKeyId: process.env.S3_ACCESS_KEY_ID,
   secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
 });
+
 const allowedExtensions = [".png", ".jpg", ".jpeg", ".bmp", ".gif"];
 
 const uploadImage = multer({
@@ -28,15 +30,24 @@ const uploadImage = multer({
       const date = `${currentYear}-${currentMonth}-${currentDate}-${currentHour}-${currentMinute}-${currentSecond}`;
 
       let randomNumber = "";
+
       for (let i = 0; i < 4; i++) {
         randomNumber += String(Math.floor(Math.random() * 10));
       }
+
       const extension = path.extname(file.originalname).toLowerCase();
+
       if (!allowedExtensions.includes(extension)) {
         return callback(new Error("확장자 에러"));
       }
+
       const img_url = `https://clone-facebook.s3.ap-northeast-2.amazonaws.com/img/${date}_${randomNumber}`;
-      req.img_url = img_url;
+
+      if (!req.img_url) {
+        req.img_url = [];
+        }
+        req.img_url.push(img_url);
+      // req.img_url = img_url;
 
       callback(null, `img/${date}_${randomNumber}`);
     },
@@ -47,5 +58,4 @@ const uploadImage = multer({
     fileSize: 25 * 1024 * 1024,
   },
 });
-
 module.exports = uploadImage;
