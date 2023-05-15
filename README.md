@@ -11,10 +11,10 @@
 |최유리 F.E |React|https://github.com/stella0905|
 |김수진 F.E |React|https://github.com/devjjin|
 |오성인 B.E (L) |Node.js|https://github.com/dhtjddls|
-|변수정 F.E |Node.js|https://github.com/crystalation|
-|홍준상 F.E |Node.js|https://github.com/redjun89|
-|강준석 F.E |Node.js|https://github.com/junseok1925|
-|김용식 F.E |Node.js|https://github.com/ystar5008|
+|변수정 B.E |Node.js|https://github.com/crystalation|
+|홍준상 B.E |Node.js|https://github.com/redjun89|
+|강준석 B.E |Node.js|https://github.com/junseok1925|
+|김용식 B.E |Node.js|https://github.com/ystar5008|
 </br>
 </br>
 
