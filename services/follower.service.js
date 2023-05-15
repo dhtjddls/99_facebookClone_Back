@@ -1,4 +1,4 @@
-const FollowerRepository = require("../repositories/follower.repositories")
+const FollowerRepository = require("../repositories/follower.repository")
 
 class FollowerService {
 
