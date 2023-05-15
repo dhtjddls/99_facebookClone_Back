@@ -1,6 +1,6 @@
-const PostRepository = require("../repositories/posts.repository");
-const { sequelize } = require("../models");
-const { Transaction } = require("sequelize");
+const PostRepository = require('../repositories/posts.repository');
+const { sequelize } = require('../models');
+const { Transaction } = require('sequelize');
 
 class PostService {
   postRepository = new PostRepository();
@@ -32,7 +32,9 @@ class PostService {
     createdAt,
     updatedAt
   ) => {
+    // transaction 설정
     const result = await sequelize.transaction(
+      // 격리 수준 설정 - 커밋된 읽기만 허용 (트랜잭션이 데이터를 수정하고 있는 중에는 데이터를 읽을 수 없다.)
       { isolateLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED },
       async (t) => {
         const createPostData = await this.postRepository.createPost(
@@ -42,7 +44,8 @@ class PostService {
           updatedAt,
           { transaction: t }
         );
-  
+        
+        // 배열 형태의 img_url을 반복하면서 하나씩 posts.repository로 보냄
         const createImageDataPromises = img_urls.map(async (img_url) => {
           const createImageData = await this.postRepository.createImage(
             createPostData.post_id,

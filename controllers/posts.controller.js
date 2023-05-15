@@ -1,4 +1,4 @@
-const PostService = require("../services/posts.service");
+const PostService = require('../services/posts.service');
 
 class PostsController {
   postService = new PostService();
@@ -14,7 +14,7 @@ class PostsController {
       if (!content) {
         return res
           .status(412)
-          .json({ errorMessage: "게시글 내용을 입력해주세요." });
+          .json({ errorMessage: '게시글 내용을 입력해주세요.' });
       }
 
       // content만 입력할 경우
@@ -45,7 +45,7 @@ class PostsController {
       console.error(err);
       return res
         .status(400)
-        .json({ errorMessage: "요청한 데이터 형식이 올바르지 않습니다." });
+        .json({ errorMessage: '요청한 데이터 형식이 올바르지 않습니다.' });
     }
   };
 
@@ -58,7 +58,7 @@ class PostsController {
     } catch (error) {
       console.error(error);
       res.status(400).json({
-        errorMessage: "게시글 조회에 실패하였습니다.",
+        errorMessage: '게시글 조회에 실패하였습니다.',
       });
     }
   };
