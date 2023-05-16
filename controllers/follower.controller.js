@@ -4,7 +4,7 @@ class FollowerController {
     followerService = new FollowerService()
 
     getFollowerAll = async (req, res, next) => {
-        const { user_id } = res.locals.user
+        const { user_id } = res.locals.user//3
         try {
             const getFollowData = await this.followerService.getFollowerAll(user_id)
 

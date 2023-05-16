@@ -7,18 +7,15 @@ class FollowerService {
     userRepository = new UserRepository(Users);
 
     getFollowerAll = async (user_id) => {
-        const getUserData = await this.followerRepository.getFollowerAll(user_id)
 
-        return getUserData.map((e) => {
-            return {
-                follow_id: e.follow_id,
-                user_id: e.user_id,
-                follower_user_id: e.follower_user_id,
-                profile_url: e.User.profile_url,
-                createdAt: e.createdAt,
-                updatedAt: e.updatedAt,
-            };
-        });
+        const getUserData = await this.followerRepository.getFollowerAll(user_id)//3
+
+        return {
+            user_id: getUserData.dataValues.user_id,
+            name: getUserData.dataValues.name,
+            profile_url: getUserData.dataValues.profile_url,
+        };
+
     };
 
     postFollower = async (user_id, follower_user_id) => {
