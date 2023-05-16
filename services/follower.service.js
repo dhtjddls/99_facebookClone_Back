@@ -30,6 +30,7 @@ class FollowerService {
         return ({ "message": "팔로워 추가 완료" })
     }
     deleteFollower = async (user_id) => {
+
         const deleteFollowData = await this.followerRepository.deleteFollower(user_id);
 
         return ({ "message": "팔로우 취소 완료" })

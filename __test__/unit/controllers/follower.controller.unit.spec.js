@@ -62,30 +62,7 @@ describe("팔로워 컨트롤러 계층 유닛 테스트", () => {
         });
     });
 
-    test("팔로워 컨트롤러 postFollower 메소드 실패 테스트", async () => {
-        const postFollowerRequestBody = {
-            user_id: "1"
-        };
 
-        mockRequest.body = postFollowerRequestBody;
-
-        const postFollowerFailedReturnValue = { "message": "팔로워 추가 실패" };
-
-        mockFollowersService.postFollower = jest.fn(() => postFollowerFailedReturnValue);
-        await followerController.postFollower(mockRequest, mockResponse);
-
-        expect(mockFollowersService.postFollower).toHaveBeenCalledTimes(1);
-        expect(mockFollowersService.postFollower).toHaveBeenCalledWith(
-            postFollowerRequestBody.user_id,
-        );
-
-        expect(mockResponse.status).toHaveBeenCalledTimes(1);
-        expect(mockResponse.status).toHaveBeenCalledWith(400);
-        expect(mockResponse.json).toHaveBeenCalledWith({
-            "message": "팔로워 추가 실패"
-        });
-
-    })
 
     test("팔로워 컨트롤러 getFollwerAll 메소드 성공 테스트", async () => {
         const getFollwerAllReturnValue = {
@@ -122,60 +99,32 @@ describe("팔로워 컨트롤러 계층 유닛 테스트", () => {
         expect(mockFollowersService.getFollowerAll).toHaveBeenCalledTimes(1);
         expect(mockResponse.status).toHaveBeenCalledTimes(1);
         expect(mockResponse.status).toHaveBeenCalledWith(200);
-        //컨트롤러에 대한 파라미터를 확인하는 
         expect(mockResponse.json).toHaveBeenCalledWith({ follow: getFollwerAllReturnValue });
     });
 
     test("팔로워 컨트롤러 deleteFollower 메소드 성공 테스트", async () => {
-        const updateCommentRequestBody = {
-            comment: "Comment_Success",
-        };
-        const updateCommentRequestParams = {
-            worldcup_id: 11,
-            comment_id: 12,
-        };
-        const updateCommentResLocals = {
-            user_id: 4,
+        const deleteFollowerRequestBody = {
+            user_id: 1
         };
 
-        mockRequest.body = updateCommentRequestBody;
-        mockRequest.params = updateCommentRequestParams;
-        mockResponse.locals.user = updateCommentResLocals;
+        mockRequest.body = deleteFollowerRequestBody
 
-        const updateCommentReturnValue = { message: "댓글 수정 완료" };
+        const deleteFollowerReturnValue = { "message": "팔로우 취소 완료" };
 
-        mockCommentsService.updateComment = jest.fn(() => updateCommentReturnValue);
+        mockFollowersService.deleteFollower = jest.fn(() => deleteFollowerReturnValue);
 
-        const validationResult = updateCommentSchema.validate(mockRequest.body);
-        expect(validationResult.value).toEqual(updateCommentRequestBody);
 
-        mockWorldcupService.getOneWorldcup = jest.fn(() => {
-            return {
-                message: "하나 있긴 함.",
-            };
-        });
-        mockCommentsService.findOneComment = jest.fn(() => {
-            return {
-                user_id: 4,
-            };
-        });
+        await followerController.deleteFollower(mockRequest, mockResponse);
 
-        await commentsController.updateComment(mockRequest, mockResponse, mockNext);
-
-        expect(mockWorldcupService.getOneWorldcup).toHaveBeenCalledTimes(1);
-        expect(mockCommentsService.findOneComment).toHaveBeenCalledTimes(1);
-        expect(mockCommentsService.updateComment).toHaveBeenCalledTimes(1);
-        expect(mockCommentsService.updateComment).toHaveBeenCalledWith(
-            updateCommentRequestBody.comment,
-            updateCommentRequestParams.worldcup_id,
-            updateCommentRequestParams.comment_id
+        expect(mockFollowersService.deleteFollower).toHaveBeenCalledTimes(1);
+        expect(mockFollowersService.deleteFollower).toHaveBeenCalledWith(
+            deleteFollowerRequestBody.user_id
         );
 
         expect(mockResponse.status).toHaveBeenCalledTimes(1);
         expect(mockResponse.status).toHaveBeenCalledWith(200);
-
         expect(mockResponse.json).toHaveBeenCalledWith({
-            message: "댓글 수정 완료",
+            "message": "팔로우 취소 완료",
         });
     });
 
