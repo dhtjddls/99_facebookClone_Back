@@ -10,31 +10,31 @@ class UserController {
 
     try {
       if (!email) {
-        res.status(412).json({
+        return res.status(412).json({
           errorMessage: '이메일을 입력해 주십시오.',
         });
       }
 
       if (!name) {
-        res.status(412).json({
+        return res.status(412).json({
           errorMessage: '이름을 입력해 주십시오.',
         });
       }
 
       if (!password) {
-        res.status(412).json({
+        return res.status(412).json({
           errorMessage: '비밀번호를 입력해 주십시오.',
         });
       }
 
       if (!birthday) {
-        res.status(412).json({
+        return res.status(412).json({
           errorMessage: '생년월일을 입력해 주십시오.',
         });
       }
 
       if (!gender) {
-        res.status(412).json({
+        return res.status(412).json({
           errorMessage: '성별을 입력해 주십시오.',
         });
       }
@@ -84,7 +84,7 @@ class UserController {
     try {
       if (!user || password !== user.password) {
         res.status(412).json({
-          errorMessage: '닉네임 또는 패스워드를 확인해주세요.',
+          errorMessage: '이메일 또는 패스워드를 확인해주세요.',
         });
         return;
       }
