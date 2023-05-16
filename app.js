@@ -6,7 +6,10 @@ const morgan = require("morgan");
 const cors = require("cors");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
+const mongoDB = require("./schemas/index");
 require("dotenv").config();
+
+mongoDB();
 
 // parser
 app.use(express.urlencoded({ extended: false }));
