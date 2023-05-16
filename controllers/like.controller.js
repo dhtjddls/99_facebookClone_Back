@@ -1,12 +1,10 @@
 const Posts = require("../models/posts");
-// const Likes = require("../models/Likes");
 const LikeService = require("../services/like.service");
 const PostService = require("../services/posts.service");
 
 class LikeController {
   likeService = new LikeService();
   postService = new PostService();
-  // PostService = new PostService();
 
   // 좋아요 등록
   createLike = async (req, res) => {
