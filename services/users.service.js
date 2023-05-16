@@ -50,20 +50,19 @@ class UserService {
   };
 
   findOneUser = async (email) => {
-    const findOneUserData = this.userRepository.findOneUser(email);
-
+    const findOneUserData = await this.userRepository.findOneUser(email);
+    console.log(findOneUserData);
     return findOneUserData;
   };
 
   findNameProfile = async (email) => {
     const user = await this.userRepository.findOneUser(email);
-    console.log('유저정보다이놈들아', user);
 
     let nameProfiles = {
       name: user.name,
       profile_url: user.profile_url,
     };
-    console.log(nameProfiles);
+
     return nameProfiles;
   };
 

@@ -45,11 +45,10 @@ class UserRepository {
   postFollower = async (user_id) => {
     const getUser = await this.Users.findOne({
       where: { user_id },
-      attributes: ["user_id", "name", "profile_url"]
+      attributes: ['user_id', 'name', 'profile_url'],
     });
-    return getUser
-  }
-
+    return getUser;
+  };
 }
 
 module.exports = UserRepository;
