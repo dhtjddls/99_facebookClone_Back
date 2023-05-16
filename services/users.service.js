@@ -1,10 +1,9 @@
-const UserRepository = require('../repositories/users.repository');
-const { Users } = require('../models');
-const { Tokens } = require('../models');
-const jwt = require('jsonwebtoken');
-const TokenRepository = require('../repositories/tokens.repository');
-const { emit } = require('nodemon');
-console.log(Users);
+const UserRepository = require("../repositories/users.repository");
+const { Users } = require("../models");
+const { Tokens } = require("../models");
+const jwt = require("jsonwebtoken");
+const TokenRepository = require("../repositories/tokens.repository");
+
 class UserService {
   userRepository = new UserRepository(Users);
   tokenRepository = new TokenRepository(Tokens);
@@ -34,13 +33,13 @@ class UserService {
   login = async (email) => {
     const user = await this.userRepository.findOneUser(email);
     const userId = user.user_id;
-    const accessToken = jwt.sign({ user_id: user.user_id }, 'secret', {
-      expiresIn: '10s',
+    const accessToken = jwt.sign({ user_id: user.user_id }, "secret", {
+      expiresIn: "10s",
     });
-    const accessObject = { type: 'Bearer', token: accessToken };
+    const accessObject = { type: "Bearer", token: accessToken };
 
-    const refreshToken = jwt.sign({ user_id: user.user_id }, 'secret', {
-      expiresIn: '7d',
+    const refreshToken = jwt.sign({ user_id: user.user_id }, "secret", {
+      expiresIn: "7d",
     });
 
     //생성한 refresh토큰을 repo에 저장하는 과정
@@ -57,7 +56,7 @@ class UserService {
 
   findNameProfile = async (email) => {
     const user = await this.userRepository.findOneUser(email);
-    console.log('유저정보다이놈들아', user);
+    console.log("유저정보다이놈들아", user);
 
     let nameProfiles = {
       name: user.name,
