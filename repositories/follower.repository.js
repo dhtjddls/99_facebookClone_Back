@@ -24,6 +24,16 @@ class FollowerRepository {
 
   }
 
+  findFollower = async (user_id, follower_user_id) => {
+    const postFollowData = await this.Follows.findOne({
+      where: {
+        user_id: user_id,
+        follower_user_id: follower_user_id,
+      }
+    });
+    return postFollowData;
+  };
+
   postFollower = async (user_id, follower_user_id) => {
     const postFollowData = await this.Follows.create({
       user_id: user_id,
