@@ -45,14 +45,23 @@ class UserController {
       }
 
       //body 데이터 입력 형식
-      // console.log(new DATE(birthday));//"year, monthIndex, day"
-      const birthDay = birthday.split(',');
+      // console.log(new DATE(birthday));//"year, monthIndex,day"
+      const birthDay = new Date(birthday);
       const year = Number(birthDay[0]);
-      const monthIndex = Number(birthDay[1]);
+      const monthIndex = Number(birthDay[1]) - 1;
       const day = Number(birthDay[2]);
 
-      const dateObj = new Date(year, monthIndex, day);
-      const formattedDate = dateObj.toLocaleDateString('ko-KR');
+      if (isNaN(birthDay)) {
+        res.status(412).json({
+          errorMessage: '유효하지 않은 날짜 형식입니다.',
+        });
+        return;
+      }
+
+      // const dateObj = new Date(year, monthIndex, day);
+      // const formattedDate = dateObj.toISOString().split('T');
+
+      const formattedDate = birthDay.toISOString().split('T')[0];
 
       //날짜는 해결해야함
       const signupData = await this.userService.signup({
