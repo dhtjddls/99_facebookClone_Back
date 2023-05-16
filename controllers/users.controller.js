@@ -1,5 +1,5 @@
 const UserService = require('../services/users.service');
-// const bcrypt = require('bcrypt');
+const moment = require('moment');
 
 class UserController {
   userService = new UserService();
@@ -10,31 +10,31 @@ class UserController {
 
     try {
       if (!email) {
-        return res.status(412).json({
+        res.status(412).json({
           errorMessage: '이메일을 입력해 주십시오.',
         });
       }
 
       if (!name) {
-        return res.status(412).json({
+        res.status(412).json({
           errorMessage: '이름을 입력해 주십시오.',
         });
       }
 
       if (!password) {
-        return res.status(412).json({
+        res.status(412).json({
           errorMessage: '비밀번호를 입력해 주십시오.',
         });
       }
 
       if (!birthday) {
-        return res.status(412).json({
+        res.status(412).json({
           errorMessage: '생년월일을 입력해 주십시오.',
         });
       }
 
       if (!gender) {
-        return res.status(412).json({
+        res.status(412).json({
           errorMessage: '성별을 입력해 주십시오.',
         });
       }
@@ -66,7 +66,8 @@ class UserController {
         gender,
         profile_url: img_url,
       });
-
+      console.log(birthday, typeof birthday);
+      console.log(signupData);
       res.status(201).json({ message: '회원가입에 성공했습니다.', signupData });
     } catch (err) {
       console.error(err);
@@ -83,7 +84,7 @@ class UserController {
     try {
       if (!user || password !== user.password) {
         res.status(412).json({
-          errorMessage: '이메일 또는 패스워드를 확인해주세요.',
+          errorMessage: '닉네임 또는 패스워드를 확인해주세요.',
         });
         return;
       }
@@ -116,7 +117,7 @@ class UserController {
 
   searchUser = async (req, res, next) => {
     try {
-      const { name } = req.body;
+      const { name } = req.params;
       const userInfos = await this.userService.searchUser(name);
 
       res.status(200).json(userInfos);
