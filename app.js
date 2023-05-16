@@ -79,6 +79,9 @@ function getUserCurrentRoom(socket) {
   return currentRoom;
 }
 
+// 1. 이전 대화 정보를 가져오기 => room_id => 조회, createdAt desc http-api
+// 2. 'user_id-want_chat_user_id' socket채팅, 대화정보 저장하기 http-api -> 메세지 create-api create
+
 const apiMainRouter = require("./routes/index");
 app.use("/api", [apiMainRouter]);
 
