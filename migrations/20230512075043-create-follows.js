@@ -18,9 +18,9 @@ module.exports = {
         },
         onDelete: "CASCADE",
       },
-      follower_name: {
+      follower_user_id: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
