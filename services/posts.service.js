@@ -5,32 +5,26 @@ const { Transaction } = require('sequelize');
 class PostService {
   postRepository = new PostRepository();
 
-  // content만 등록 시
+  // 게시글 작성 - content만 등록 시
   createPost = async (
-    user_id, content, createdAt, updatedAt
+    user_id, content
   ) => {
     const createPostData = await this.postRepository.createPost(
       user_id,
       content,
-      createdAt,
-      updatedAt
     );
 
     return {
       post_id: createPostData.post_id,
       content: createPostData.content,
-      createdAt: createPostData.createdAt,
-      updatedAt: createPostData.updatedAt,
     };
   };
 
-  // 이미지 파일 함께 등록 시
+  // 게시글 작성 - content와 이미지 파일 함께 등록 시
   createPostImage = async (
     user_id,
     content,
     img_urls,
-    createdAt,
-    updatedAt
   ) => {
     // transaction 설정
     const result = await sequelize.transaction(
@@ -40,37 +34,74 @@ class PostService {
         const createPostData = await this.postRepository.createPost(
           user_id,
           content,
-          createdAt,
-          updatedAt,
           { transaction: t }
         );
-        
+
         // 배열 형태의 img_url을 반복하면서 하나씩 posts.repository로 보냄
         const createImageDataPromises = img_urls.map(async (img_url) => {
           const createImageData = await this.postRepository.createImage(
             createPostData.post_id,
             img_url,
-            createdAt,
-            updatedAt,
             { transaction: t }
           );
           return createImageData;
         });
-  
+
         const createImageData = await Promise.all(createImageDataPromises);
-  
+
         return {
           post_id: createPostData.post_id,
           content: createPostData.content,
           img_urls: createImageData.map((data) => data.img_url),
-          createdAt: createPostData.createdAt,
-          updatedAt: createPostData.updatedAt,
         };
       }
     );
-  
+
     return result;
-  };  
+  };
+
+  // 게시글 수정
+  updatePost = async (post_id, content) => {
+    const updatePost = await this.postRepository.updatePost(post_id, content);
+    return updatePost;
+  };
+
+  // 게시글 수정 - 이미지 파일 추가 등록
+  updateImage = async (post_id, img_urls) => {
+    const createImageDataPromises = img_urls.map(async (img_url) => {
+      const createImageData = await this.postRepository.createImage(
+        post_id,
+        img_url,
+      );
+      return createImageData;
+    });
+
+    const createImageData = await Promise.all(createImageDataPromises);
+
+    return {
+      post_id,
+      img_urls: createImageData.map((data) => data.img_url),
+    };
+  };
+
+  // 게시글 수정 - img_url 삭제
+  deleteImage = async (removeImgIdArray) => {
+    await removeImgIdArray.split(',').map( (url_id) => {
+      this.postRepository.deleteImage(url_id);
+    });
+  };
+
+  // 게시글 삭제
+  deletePost = async (post_id) => {
+    const deletePost = await this.postRepository.deletePost(post_id);
+    return deletePost;
+  };
+
+  // post_id로 해당 게시물에 등록된 모든 이미지 조회
+  findAllImageByPostId = async (post_id) => {
+    const findAllImageByPostIdData = await this.postRepository.findAllImageByPostId(post_id);
+    return findAllImageByPostIdData;
+  };
 
   // post_id로 하나의 게시글만 조회
   findOnePost = async (post_id) => {

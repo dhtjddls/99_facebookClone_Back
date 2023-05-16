@@ -1,4 +1,5 @@
 const UserService = require('../services/users.service');
+const moment = require('moment');
 
 class UserController {
   userService = new UserService();
@@ -45,25 +46,34 @@ class UserController {
       }
 
       //body 데이터 입력 형식
-      // console.log(new DATE(birthday));//"year, monthIndex, day"
-      const birthDay = birthday.split(',');
-      const year = Number(birthDay[0]);
-      const monthIndex = Number(birthDay[1]);
-      const day = Number(birthDay[2]);
+      // console.log(new DATE(birthday));//"year, monthIndex,day"
+      // const birthDay = moment(birthday);
+      // // const year = Number(birthDay[0]);
+      // // const monthIndex = Number(birthDay[1]) - 1;
+      // // const day = Number(birthDay[2]);
 
-      const dateObj = new Date(year, monthIndex, day);
-      const formattedDate = dateObj.toLocaleDateString('ko-KR');
+      // // if (isNaN(birthDay)) {
+      // //   res.status(412).json({
+      // //     errorMessage: '유효하지 않은 날짜 형식입니다.',
+      // //   });
+      // //   return;
+      // // }
+
+      // // const dateObj = new Date(year, monthIndex, day);
+      // // const formattedDate = dateObj.toISOString().split('T');
+
+      // const formattedDate = birthDay.format('YYYY-MM-DD');
 
       //날짜는 해결해야함
       const signupData = await this.userService.signup({
         email,
         name,
         password,
-        birthday: formattedDate,
+        birthday,
         gender,
         profile_url: img_url,
       });
-
+      console.log(birthday, typeof birthday);
       console.log(signupData);
       res.status(201).json({ message: '회원가입에 성공했습니다.', signupData });
     } catch (err) {
@@ -88,6 +98,8 @@ class UserController {
 
       //userData는 accessObject, refreshToken
       const userData = await this.userService.login(email);
+      //회원네임과 사진을 반환해줘야함
+      const loginData = await this.userService.findNameProfile(email);
 
       //Bearer, token 따로 따로 지정해줌
       res.cookie(
@@ -98,6 +110,7 @@ class UserController {
       res.cookie('refreshtoken', userData.refreshToken);
       res.status(200).json({
         message: '로그인에 성공하였습니다.',
+        loginData,
         Authorization: `${userData.accessObject.type} ${userData.accessObject.token}`,
         refreshtoken: userData.refreshToken,
       });

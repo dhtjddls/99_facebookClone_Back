@@ -10,6 +10,7 @@ const { Users } = require('../models');
 const { Tokens } = require('../models');
 const jwt = require('jsonwebtoken');
 const TokenRepository = require('../repositories/tokens.repository');
+const { emit } = require('nodemon');
 console.log(Users);
 >>>>>>> fde26467e373d94eb4599e808343db2952ac1a93
 class UserService {
@@ -58,7 +59,20 @@ class UserService {
 
   findOneUser = async (email) => {
     const findOneUserData = this.userRepository.findOneUser(email);
+
     return findOneUserData;
+  };
+
+  findNameProfile = async (email) => {
+    const user = await this.userRepository.findOneUser(email);
+    console.log('유저정보다이놈들아', user);
+
+    let nameProfiles = {
+      name: user.name,
+      profile_url: user.profile_url,
+    };
+    console.log(nameProfiles);
+    return nameProfiles;
   };
 
   searchUser = async (name) => {

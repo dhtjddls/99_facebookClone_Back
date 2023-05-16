@@ -2,27 +2,62 @@ const { Posts, Images, Users, Sequelize } = require("../models");
 
 class PostRepository {
   // Posts Table에 content 저장
-  createPost = async (user_id, content, createdAt, updatedAt) => {
+  createPost = async (user_id, content) => {
     const createPostData = await Posts.create({
       user_id,
       content,
-      createdAt,
-      updatedAt,
     });
 
     return createPostData;
   };
 
   // Images Table에 img_url 저장
-  createImage = async (post_id, img_url, createdAt, updatedAt) => {
-      const createImageData = await Images.create({
-        post_id,
-        img_url,
-        createdAt,
-        updatedAt,
-      });
-      return createImageData;
-    };
+  createImage = async (post_id, img_url) => {
+    const createImageData = await Images.create({
+      post_id,
+      img_url,
+    });
+    return createImageData;
+  };
+
+  // post_id를 이용해 해당 게시글에 저장된 모든 이미지 조회
+  findAllImageByPostId = async (post_id) => {
+    const findAllImageByPostIdData = await Images.findAll({
+      where: { post_id },
+      attributes: [
+        "image_id",
+        "post_id",
+        "img_url",
+        "createdAt",
+        "updatedAt",
+      ]
+    });
+    return findAllImageByPostIdData;
+  };
+
+  // 게시글 삭제
+  deletePost = async (post_id) => {
+    const deletePost = await Posts.findByPk(post_id);
+    await deletePost.destroy();
+    return;
+  };
+
+  // 게시글 수정
+  updatePost = async (post_id, content) => {
+    const checkPost = await Posts.findByPk(post_id);
+    const updatePost = await checkPost.update(
+      { content },
+      { where: { post_id } },
+    );
+    return updatePost;
+  };
+
+  // 게시글 수정 - img_url 삭제
+  deleteImage = async (url_id) => {
+    console.log(url_id);
+    await Images.destroy({where: {image_id: url_id}});
+    return;
+  };
 
   findOnePost = async (post_id) => {
     const findOnePostData = await Posts.findOne({
@@ -41,10 +76,10 @@ class PostRepository {
 
   findAllPost = async () => {
     const findAllPostsData = await Posts.findAll({
-      include:[
+      include: [
         {
           model: Users,
-          attributes:[],
+          attributes: [],
           require: true,
         },
       ],
