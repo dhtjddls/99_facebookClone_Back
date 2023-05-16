@@ -7,32 +7,42 @@ class FollowerService {
     userRepository = new UserRepository(Users);
 
     getFollowerAll = async (user_id) => {
-        const getFollowData = await this.followerRepository.getFollowerAll(user_id);
+        const getUserData = await this.followerRepository.getFollowerAll(user_id)
 
-        return getFollowData.map((e) => {
+        return getUserData.map((e) => {
             return {
                 follow_id: e.follow_id,
                 user_id: e.user_id,
-                follower_name: e.follower_name,
-                profile_url: e.profile_url,
+                follower_user_id: e.follower_user_id,
+                profile_url: e.User.profile_url,
                 createdAt: e.createdAt,
                 updatedAt: e.updatedAt,
             };
         });
     };
 
-    postFollower = async (user_id) => {
-        const getUser = await this.userRepository.postFollower(user_id);
+    postFollower = async (user_id, follower_user_id) => {
 
-        const postFollowData = await this.followerRepository.postFollower(
-            user_id,
-            getUser
-        );
-        return { message: "팔로워 추가 완료" };
+        try {
+            const findFollower = await this.followerRepository.findFollower(user_id, follower_user_id)
+            if (findFollower) {
+                return { message: "이미 추가된 팔로워 입니다" };
+            } else {
+                await this.followerRepository.postFollower(
+                    user_id,
+                    follower_user_id
+                );
+                return { message: "팔로워 추가 완료" };
+            }
+        } catch (error) {
+            console.error(error)
+        }
+
     };
-    deleteFollower = async (user_id) => {
+    deleteFollower = async (user_id, follower_user_id) => {
         const deleteFollowData = await this.followerRepository.deleteFollower(
-            user_id
+            user_id,
+            follower_user_id
         );
 
         return { message: "팔로우 취소 완료" };

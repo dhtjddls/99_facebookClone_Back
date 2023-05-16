@@ -7,6 +7,8 @@ const cors = require("cors");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const mongoDB = require("./schemas/index");
+const swaggerUi = require("swagger-ui-express");
+const swaggerFile = require("./swagger-output");
 require("dotenv").config();
 
 mongoDB();
@@ -27,6 +29,9 @@ app.use(
     // cors options
   })
 );
+
+// swagger
+app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 let rooms = [];
 app.get("/", (req, res) => {
@@ -62,7 +67,7 @@ io.on("connection", (socket) => {
 });
 
 // TEST CODE GOES HERE
-(async function () {})();
+(async function () { })();
 
 function getUserCurrentRoom(socket) {
   let currentRoom = "";
