@@ -1,16 +1,17 @@
 const { Op } = require("sequelize");
+
 class UserRepository {
   constructor(usersModel) {
     this.Users = usersModel;
   }
-  createUser = async (email, name, password, birthday, gender, file) => {
+  createUser = async (email, name, password, birthday, gender, profile_url) => {
     const createUserData = await this.Users.create(
       email,
       name,
       password,
       birthday,
       gender,
-      file
+      profile_url
     );
     return createUserData;
   };
@@ -39,6 +40,14 @@ class UserRepository {
       attributes: ["user_id", "name", "email", "profile_url"],
     });
     return searchUserData;
+  };
+
+  postFollower = async (user_id) => {
+    const getUser = await this.Users.findOne({
+      where: { user_id },
+      attributes: ["user_id", "name", "profile_url"],
+    });
+    return getUser;
   };
 }
 

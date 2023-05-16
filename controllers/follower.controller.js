@@ -1,4 +1,4 @@
-const FollowerService = require("../services/follower.services")
+const FollowerService = require("../services/follower.service")
 
 class FollowerController {
     followerService = new FollowerService()
@@ -7,7 +7,7 @@ class FollowerController {
         const { user_id } = req.body
         try {
             const getFollowData = await this.followerService.getFollowerAll(user_id)
-            console.log(getFollowData)
+
             return res.status(200).json({ follow: getFollowData })
         } catch (error) {
             console.error(error)
