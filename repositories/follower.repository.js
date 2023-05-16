@@ -1,7 +1,10 @@
 class FollowerRepository {
+  constructor(Follows) {
+    this.Follows = Follows;
+  }
+
   getFollowerAll = async (user_id) => {
-    console.log(user_id);
-    const getFollowData = await Follows.findAll({
+    const getFollowData = await this.Follows.findAll({
       where: { user_id },
       attributes: [
         "follow_id",
