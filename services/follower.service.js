@@ -1,8 +1,12 @@
+const { Users, Follows } = require("../models");
 const FollowerRepository = require("../repositories/follower.repository")
+const UserRepository = require("../repositories/users.repository")
 
 class FollowerService {
 
-    followerRepository = new FollowerRepository()
+    followerRepository = new FollowerRepository(Follows);
+    userRepository = new UserRepository(Users);
+
 
     getFollowerAll = async (user_id) => {
         const getFollowData = await this.followerRepository.getFollowerAll(user_id);
@@ -11,6 +15,7 @@ class FollowerService {
             return {
                 follow_id: e.follow_id,
                 user_id: e.user_id,
+                follower_name: e.follower_name,
                 profile_url: e.profile_url,
                 createdAt: e.createdAt,
                 updatedAt: e.updatedAt
@@ -19,12 +24,11 @@ class FollowerService {
     }
 
     postFollower = async (user_id) => {
+        const getUser = await this.userRepository.postFollower(user_id);
 
-        const postFollowData = await this.followerRepository.postFollower(user_id);
-
+        const postFollowData = await this.followerRepository.postFollower(user_id, getUser);
         return ({ "message": "팔로워 추가 완료" })
     }
-
     deleteFollower = async (user_id) => {
         const deleteFollowData = await this.followerRepository.deleteFollower(user_id);
 

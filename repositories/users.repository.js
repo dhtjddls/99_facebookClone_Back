@@ -41,6 +41,15 @@ class UserRepository {
     });
     return searchUserData;
   };
+
+  postFollower = async (user_id) => {
+    const getUser = await this.Users.findOne({
+      where: { user_id },
+      attributes: ["user_id", "name", "profile_url"]
+    });
+    return getUser
+  }
+
 }
 
 module.exports = UserRepository;
