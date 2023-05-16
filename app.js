@@ -10,7 +10,7 @@ const mongoDB = require("./schemas/index");
 require("dotenv").config();
 
 mongoDB();
-
+// 왜안돼..ㅠㅠ
 // parser
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
