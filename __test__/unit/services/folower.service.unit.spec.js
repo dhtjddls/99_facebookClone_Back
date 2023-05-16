@@ -22,7 +22,7 @@ let followersService = new FollowerService();
 followersService.followersRepository = mockFollowersRepository;
 
 
-describe("팔로워 레포지토리 계층 유닛 테스트", () => {
+describe("팔로워  서비스계층 유닛 테스트", () => {
     // 각 test가 실행되기 전에 실행됩니다.
     beforeEach(() => {
         jest.resetAllMocks(); // 모든 Mock을 초기화합니다.
@@ -33,7 +33,7 @@ describe("팔로워 레포지토리 계층 유닛 테스트", () => {
         });
     });
 
-    test("팔로워 서비스 postFollower 메소드 성공 테스트", async () => {
+    test("팔로워 서비스계층 postFollower 메소드 성공 테스트", async () => {
         const postFollowerReturnValue = { "message": "팔로워 추가 완료" };
 
         const postFollowerBody = {
@@ -54,7 +54,7 @@ describe("팔로워 레포지토리 계층 유닛 테스트", () => {
 
 
 
-    test("팔로워 서비스 getFollwerAll 메소드 성공 테스트", async () => {
+    test("팔로워 서비스계층 getFollwerAll 메소드 성공 테스트", async () => {
         const getFollowerAllReturnValue = {
             follow: [
                 {
@@ -96,7 +96,7 @@ describe("팔로워 레포지토리 계층 유닛 테스트", () => {
 
     });
 
-    test("팔로워 서비스 deleteFollower 메소드 성공 테스트", async () => {
+    test("팔로워 서비스계층 deleteFollower 메소드 성공 테스트", async () => {
 
         const deleteFollowerReturnValue = { "message": "팔로워 취소 완료" };
 
