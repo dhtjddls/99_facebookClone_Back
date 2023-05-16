@@ -28,8 +28,6 @@ app.use(
   })
 );
 
-// 안녕 나는 개발자야!
-
 let rooms = [];
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
