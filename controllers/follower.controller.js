@@ -1,4 +1,3 @@
-const { element } = require("prop-types")
 const FollowerService = require("../services/follower.service")
 
 class FollowerController {
