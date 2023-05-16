@@ -1,4 +1,4 @@
-const { Op } = require("sequelize");
+const { Op } = require('sequelize');
 
 class UserRepository {
   constructor(usersModel) {
@@ -37,7 +37,7 @@ class UserRepository {
           [Op.like]: `%${name}%`,
         },
       },
-      attributes: ["user_id", "name", "email", "profile_url"],
+      attributes: ['user_id', 'name', 'email', 'profile_url'],
     });
     return searchUserData;
   };
@@ -45,7 +45,7 @@ class UserRepository {
   postFollower = async (user_id) => {
     const getUser = await this.Users.findOne({
       where: { user_id },
-      attributes: ["user_id", "name", "profile_url"],
+      attributes: ['user_id', 'name', 'profile_url'],
     });
     return getUser;
   };
