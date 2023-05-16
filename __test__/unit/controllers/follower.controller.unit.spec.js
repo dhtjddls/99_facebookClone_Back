@@ -33,7 +33,7 @@ describe("팔로워 컨트롤러 계층 유닛 테스트", () => {
         });
     });
 
-    test("팔로워 컨트롤러 postFollower 메소드 성공 테스트", async () => {
+    test("팔로워 컨트롤러계층 postFollower 메소드 성공 테스트", async () => {
         const postFollowerRequestBody = {
             user_id: 1
         };
@@ -64,7 +64,7 @@ describe("팔로워 컨트롤러 계층 유닛 테스트", () => {
 
 
 
-    test("팔로워 컨트롤러 getFollwerAll 메소드 성공 테스트", async () => {
+    test("팔로워 컨트롤러계층 getFollwerAll 메소드 성공 테스트", async () => {
         const getFollwerAllReturnValue = {
             follow: [
                 {
@@ -102,7 +102,7 @@ describe("팔로워 컨트롤러 계층 유닛 테스트", () => {
         expect(mockResponse.json).toHaveBeenCalledWith({ follow: getFollwerAllReturnValue });
     });
 
-    test("팔로워 컨트롤러 deleteFollower 메소드 성공 테스트", async () => {
+    test("팔로워 컨트롤러계층 deleteFollower 메소드 성공 테스트", async () => {
         const deleteFollowerRequestBody = {
             user_id: 1
         };

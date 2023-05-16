@@ -22,14 +22,14 @@ let mockResponse = {
 let followersRepository = new FollowerRepository(mockFollowersModel);
 
 
-describe("팔로워 레포지토리 계층 유닛 테스트", () => {
+describe("팔로워 레포지토리계층 유닛 테스트", () => {
     // 각 test가 실행되기 전에 실행됩니다.
     beforeEach(() => {
         jest.resetAllMocks(); // 모든 Mock을 초기화합니다.
 
     });
 
-    test("팔로워 레포지토리 postFollower 메소드 성공 테스트", async () => {
+    test("팔로워 레포지토리계층 postFollower 메소드 성공 테스트", async () => {
         mockFollowersModel.create = jest.fn(() => {
             return { "message": "팔로워 추가 완료" };
         });
@@ -58,7 +58,7 @@ describe("팔로워 레포지토리 계층 유닛 테스트", () => {
 
 
 
-    test("팔로워 레포지토리 getFollwerAll 메소드 성공 테스트", async () => {
+    test("팔로워 레포지토리계층 getFollwerAll 메소드 성공 테스트", async () => {
         mockFollowersModel.findAll = jest.fn(() => {
             return [
                 {
@@ -111,7 +111,7 @@ describe("팔로워 레포지토리 계층 유닛 테스트", () => {
 
     });
 
-    test("팔로워 레포지토리 deleteFollower 메소드 성공 테스트", async () => {
+    test("팔로워 레포지토리계층 deleteFollower 메소드 성공 테스트", async () => {
 
         mockFollowersModel.destroy = jest.fn(() => {
             return { "message": "팔로워 취소 완료" }
