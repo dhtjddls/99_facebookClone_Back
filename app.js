@@ -8,7 +8,7 @@ const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const mongoDB = require("./schemas/index");
 require("dotenv").config();
-// test
+
 mongoDB();
 
 // parser
