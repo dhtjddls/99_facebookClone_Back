@@ -1,6 +1,9 @@
 name: Code Review
 
-permissions: read-all|write-all
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
 
 on:
   pull_request:
