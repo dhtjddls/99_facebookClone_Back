@@ -64,7 +64,7 @@ class PostsController {
       const img_urls = req.img_url; // 새로 추가된 이미지 파일
 
       // 이미지 파일 삭제
-      if (removeImgIdArray !== undefined) {
+      if (removeImgIdArray.length > 0) {
         await this.postService.deleteImage(removeImgIdArray);
       };
 
