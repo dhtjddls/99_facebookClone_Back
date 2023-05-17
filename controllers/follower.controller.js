@@ -37,8 +37,8 @@ class FollowerController {
 
     deleteFollower = async (req, res, next) => {
         const { user_id } = res.locals.user
-        const { follower_user_id } = req.body
-        console.log(follower_user_id)
+        const { follower_user_id } = req.params
+
 
         try {
             const deleteFollowData = await this.followerService.deleteFollower(user_id, follower_user_id);

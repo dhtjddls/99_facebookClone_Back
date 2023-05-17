@@ -6,6 +6,6 @@ const authMiddleware = require("../middlewares/auth-middleware");
 
 router.get("/", authMiddleware, followerController.getFollowerAll);
 router.post("/", authMiddleware, followerController.postFollower);
-router.delete("/", authMiddleware, followerController.deleteFollower);
+router.delete("/:follower_user_id", authMiddleware, followerController.deleteFollower);
 
 module.exports = router;
