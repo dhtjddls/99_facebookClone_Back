@@ -9,7 +9,7 @@ class FollowerRepository {
 
   getFollowerAll = async (user_id) => {
     const followList = await this.Follows.findAll({
-      user_id,
+      where: { user_id },
     });
     const followUserIds = followList.map((e) => e.follower_user_id);
     const userInfos = await this.Users.findAll({
