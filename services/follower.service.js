@@ -8,14 +8,30 @@ class FollowerService {
 
     getFollowerAll = async (user_id) => {
 
-        const getUserData = await this.followerRepository.getFollowerAll(user_id)//3
+        const getUserData = await this.followerRepository.getFollowerAll(user_id)
+        const a = getUserData[0].map((e) => {
+            return {
+                follow_id: e.dataValues.follow_id,
+                createdAt: e.dataValues.createdAt,
+                updatedAt: e.dataValues.updatedAt
+            }
+        })
 
-        return {
-            user_id: getUserData.dataValues.user_id,
-            name: getUserData.dataValues.name,
-            profile_url: getUserData.dataValues.profile_url,
-        };
+        const b = getUserData[1].map((e) => {
+            return {
+                user_id: e.dataValues.user_id,
+                follower_name: e.dataValues.name,
+                profile_url: e.dataValues.profile_url
+            }
 
+        })
+
+        let jujimin = [];
+        for (let i = 0; i < a.length; i++) {
+            let c = { ...a[i], ...b[i] };
+            jujimin.push(c);
+        }
+        return jujimin
     };
 
     postFollower = async (user_id, follower_user_id) => {
