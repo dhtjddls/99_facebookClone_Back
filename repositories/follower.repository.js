@@ -87,6 +87,7 @@ class FollowerRepository {
     const deleteFollowData = await this.Follows.destroy({
       where: { user_id: user_id, follower_user_id: follower_user_id },
     });
+
     return deleteFollowData;
   };
 }
