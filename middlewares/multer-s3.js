@@ -41,13 +41,13 @@ const uploadImage = multer({
         return callback(new Error("확장자 에러"));
       }
 
-      const img_url = `https://clone-facebook.s3.ap-northeast-2.amazonaws.com/img/${date}_${randomNumber}`;
+      const img_url = `https://d3awy49m9ak8tv.cloudfront.net/img/${date}_${randomNumber}`;
 
       // 생성된 img_url을 req.img_url에 배열 형태로 담음
       if (!req.img_url) {
         req.img_url = [];
-        }
-        req.img_url.push(img_url);
+      }
+      req.img_url.push(img_url);
 
       callback(null, `img/${date}_${randomNumber}`);
     },

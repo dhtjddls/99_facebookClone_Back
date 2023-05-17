@@ -1,6 +1,5 @@
 const { Users, Sequelize } = require("../models");
 
-
 class FollowerRepository {
   constructor(Follows) {
     this.Follows = Follows;
@@ -11,25 +10,24 @@ class FollowerRepository {
     const findAllPostsData = await this.Follows.findOne({
       where: { user_id }, //3
       attributes: ["follower_user_id", "createdAt", "updatedAt"], //7
-      order: [["createdAt", "DESC"]]
+      order: [["createdAt", "DESC"]],
     });
 
-    const recentFollowerId = findAllPostsData.dataValues.follower_user_id
+    const recentFollowerId = findAllPostsData.dataValues.follower_user_id;
 
     const findAllUsersData = await this.Users.findOne({
-      where: { user_id: recentFollowerId },//7
-      attributes: ["user_id", "name", "profile_url"]
-    })
+      where: { user_id: recentFollowerId }, //7
+      attributes: ["user_id", "name", "profile_url"],
+    });
     return findAllUsersData;
-
-  }
+  };
 
   findFollower = async (user_id, follower_user_id) => {
     const postFollowData = await this.Follows.findOne({
       where: {
         user_id: user_id,
         follower_user_id: follower_user_id,
-      }
+      },
     });
     return postFollowData;
   };
@@ -42,20 +40,12 @@ class FollowerRepository {
     return postFollowData;
   };
 
-
-
   deleteFollower = async (user_id, follower_user_id) => {
-
     const deleteFollowData = await this.Follows.destroy({
       where: { user_id: user_id, follower_user_id: follower_user_id },
     });
     return deleteFollowData;
   };
-
-
-
-
-
 }
 
 module.exports = FollowerRepository;
