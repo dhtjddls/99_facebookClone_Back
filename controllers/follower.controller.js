@@ -8,6 +8,7 @@ class FollowerController {
         try {
             const getFollowData = await this.followerService.getFollowerAll(user_id)
 
+
             return res.status(200).json({ follow: getFollowData })
         } catch (error) {
             console.error(error)
