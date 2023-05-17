@@ -53,12 +53,20 @@ class FollowerService {
 
     };
     deleteFollower = async (user_id, follower_user_id) => {
-        const deleteFollowData = await this.followerRepository.deleteFollower(
+        const deleteFollowData = await this.followerRepository.findFollower(
             user_id,
             follower_user_id
         );
+        if (!deleteFollowData) {
+            return { message: "팔로우 하고 있지 않은 팔로워 입니다" };
+        } else {
+            await this.followerRepository.deleteFollower(
+                user_id,
+                follower_user_id
+            );
+            return { message: "팔로워 취소 완료" };
+        }
 
-        return { message: "팔로우 취소 완료" };
     };
 }
 
