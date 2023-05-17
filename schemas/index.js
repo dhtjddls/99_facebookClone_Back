@@ -6,10 +6,7 @@ const mongoDB = () => {
     useUnifiedTopology: true,
   };
   try {
-    mongoose.connect(
-      "mongodb+srv://sparta:test@cluster0.xzw0iic.mongodb.net/?retryWrites=true&w=majority",
-      connectionParams
-    );
+    mongoose.connect(process.env.MONGO_DB_CLIENT_URL, connectionParams);
     console.log("mongo connected");
   } catch (error) {
     console.log(error);

@@ -1,16 +1,18 @@
 const express = require('express');
 const app = express();
-const port = 3001;
+const port = 3000;
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const cors = require('cors');
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const mongoDB = require('./schemas/index');
+const swaggerUi = require('swagger-ui-express');
+const swaggerFile = require('./swagger-output');
 require('dotenv').config();
 
 mongoDB();
-
+// 왜안돼..ㅠㅠ
 // parser
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -27,6 +29,9 @@ app.use(
     // cors options
   })
 );
+
+// swagger
+app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 let rooms = [];
 app.get('/', (req, res) => {

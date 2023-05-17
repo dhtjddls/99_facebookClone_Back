@@ -4,7 +4,7 @@ class FollowerController {
     followerService = new FollowerService()
 
     getFollowerAll = async (req, res, next) => {
-        const { user_id } = req.body
+        const { user_id } = res.locals.user//3
         try {
             const getFollowData = await this.followerService.getFollowerAll(user_id)
 
@@ -16,23 +16,29 @@ class FollowerController {
     }
 
     postFollower = async (req, res, next) => {
-        const { user_id } = req.body
-
+        const { user_id } = res.locals.user
+        const { follower_user_id } = req.body
         try {
-            const postFollowData = await this.followerService.postFollower(user_id);
-            return res.status(200).json(postFollowData)
+            const postFollowData = await this.followerService.postFollower(user_id, follower_user_id);
+            if (postFollowData.message === "이미 추가된 팔로워 입니다") {
+                return res.status(400).json(postFollowData)
+            } else {
+                return res.status(200).json(postFollowData)
+            }
         }
         catch (error) {
             console.error(error)
+
             return res.status(400).json({ "errorMessage": "팔로워 추가에 실패하였습니다." })
         }
 
     }
 
     deleteFollower = async (req, res, next) => {
-        const { user_id } = req.body
+        const { user_id } = res.locals.user
+        const { follower_user_id } = req.body
         try {
-            const deleteFollowData = await this.followerService.deleteFollower(user_id);
+            const deleteFollowData = await this.followerService.deleteFollower(user_id, follower_user_id);
             return res.status(200).json(deleteFollowData);
         } catch (error) {
             console.error(error)
