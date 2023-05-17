@@ -1,7 +1,6 @@
 const { Users, Sequelize } = require("../models");
 const { Op } = require("sequelize");
 
-
 class FollowerRepository {
   constructor(Follows) {
     this.Follows = Follows;
@@ -9,7 +8,6 @@ class FollowerRepository {
   }
 
   getFollowerAll = async (user_id) => {
-
     const followList = await this.Follows.findAll({
       user_id,
     });
@@ -23,7 +21,6 @@ class FollowerRepository {
     });
     return [followList, userInfos]
   }
-
 
   //  //현재 user_id : 3
   //   //Follows 모델을 전체조회
@@ -73,7 +70,7 @@ class FollowerRepository {
       where: {
         user_id: user_id,
         follower_user_id: follower_user_id,
-      }
+      },
     });
     return postFollowData;
   };
@@ -86,20 +83,12 @@ class FollowerRepository {
     return postFollowData;
   };
 
-
-
   deleteFollower = async (user_id, follower_user_id) => {
-
     const deleteFollowData = await this.Follows.destroy({
       where: { user_id: user_id, follower_user_id: follower_user_id },
     });
     return deleteFollowData;
   };
-
-
-
-
-
 }
 
 module.exports = FollowerRepository;
