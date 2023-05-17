@@ -37,15 +37,14 @@ class PostRepository {
 
   // 게시글 삭제
   deletePost = async (post_id) => {
-    const deletePost = await Posts.findByPk(post_id);
-    await deletePost.destroy();
+    await Posts.destroy({ where: { post_id } });
+    await Images.destroy({ where: { post_id } });
     return;
   };
 
   // 게시글 수정
   updatePost = async (post_id, content) => {
-    const checkPost = await Posts.findByPk(post_id);
-    const updatePost = await checkPost.update(
+    const updatePost = await Posts.update(
       { content },
       { where: { post_id } },
     );
@@ -54,7 +53,6 @@ class PostRepository {
 
   // 게시글 수정 - img_url 삭제
   deleteImage = async (url_id) => {
-    console.log(url_id);
     await Images.destroy({where: {image_id: url_id}});
     return;
   };
