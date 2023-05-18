@@ -84,7 +84,7 @@ class PostsController {
       };
 
       if (user_id !== findOnePost.user_id) {
-        return res.status(400).json({ errorMessage: '게시글 수정 권한이 없습니다.' });
+        return res.status(403).json({ errorMessage: '게시글 수정 권한이 없습니다.' });
       };
 
       if (!content) {
