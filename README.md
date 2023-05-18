@@ -71,5 +71,5 @@
 </br>
 
 # ERD
+![faerd PNG](https://github.com/dhtjddls/99_facebookClone_Back/assets/82641608/5c5de337-ff9d-4c87-a882-46cad31c1877)
 
-![feacerd PNG](https://github.com/99-facebookClone/99_facebookClone_Back/assets/96641210/efb2b0d9-b9fd-4971-8e19-33a338e4f7cf)
