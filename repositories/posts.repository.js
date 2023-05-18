@@ -85,6 +85,7 @@ class PostRepository {
         "post_id",
         "user_id",
         [Sequelize.literal("`User`.`name`"), "name"],
+        [Sequelize.literal("`User`.`profile_url`"), "profile_url"],
         "content",
         "likes",
         "createdAt",

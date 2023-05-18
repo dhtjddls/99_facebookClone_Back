@@ -37,10 +37,17 @@ class FollowerController {
 
     deleteFollower = async (req, res, next) => {
         const { user_id } = res.locals.user
-        const { follower_user_id } = req.body
+        const { follower_user_id } = req.params
+
+
         try {
             const deleteFollowData = await this.followerService.deleteFollower(user_id, follower_user_id);
-            return res.status(200).json(deleteFollowData);
+            if (deleteFollowData.message === "팔로우 하고 있지 않은 팔로워 입니다") {
+                return res.status(400).json(deleteFollowData)
+            } else {
+                return res.status(200).json(deleteFollowData)
+            }
+
         } catch (error) {
             console.error(error)
             return res.status(400).json({ "errorMessage": "팔로워 취소에 실패하였습니다." })
